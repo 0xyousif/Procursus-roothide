@@ -37,6 +37,7 @@ jobs:
       - name: Prepare Procursus tools if not cached
         if: steps.procursus-cache.outputs.cache-hit != 'true'
         run: |
+          chmod +x ${{ github.workspace }}/build_tools/prepare_github_runner.sh
           ${{ github.workspace }}/build_tools/prepare_github_runner.sh
 
       - name: Add Procursus to PATH
