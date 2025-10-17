@@ -72,7 +72,7 @@ jobs:
         shell: bash
         run: |
           cd libroothide
-          export PATH="/usr/local/bin:$PATH
+          export PATH="/usr/local/bin:$PATH"
           bash symredirect-host-build.sh
           echo "✅ symredirect installed successfully"
           symredirect || echo "symredirect test completed"
