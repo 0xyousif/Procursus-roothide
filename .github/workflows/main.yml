@@ -64,10 +64,9 @@ jobs:
 
       - name: Clone libroothide and build symredirect
         run: |
-          git clone https://github.com/ProcursusTeam/libroothide.git
+          git clone https://github.com/ProcursusTeam/libroothide.git --depth=1
           cd libroothide
-          bash symredirect-build.sh || clang++ -std=c++11 -o symredirect-host symredirect.cpp
-          sudo cp symredirect-host /usr/local/bin/symredirect
+          bash symredirect-build.sh
           symredirect || echo "symredirect test completed"
 
       - name: Build Meson
