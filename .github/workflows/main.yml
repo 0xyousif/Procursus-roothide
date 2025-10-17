@@ -69,15 +69,6 @@ jobs:
           bash symredirect-build.sh
           symredirect || echo "symredirect test completed"
 
-      - name: Build Meson
-        run: |
-          git clone https://github.com/mesonbuild/meson.git
-          cd meson
-          python3 setup.py build
-          mkdir -p /opt/procursus/usr/local/bin
-          sudo cp meson.py /opt/procursus/usr/local/bin/meson
-          sudo chmod +x /opt/procursus/usr/local/bin/meson
-
       - name: Package Meson for iOS
         run: cd ${{ github.workspace }}; make meson-package MEMO_TARGET=iphoneos-arm64-roothide
 
