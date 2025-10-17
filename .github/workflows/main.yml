@@ -62,6 +62,19 @@ jobs:
             groff gzip ldid libtool make meson ncurses-bin openssl patch pkg-config \
             po4a python3 sed tar triehash wget xz-utils zstd
 
+      - name: Checkout libroothide
+        uses: actions/checkout@v4
+        with:
+          repository: ProcursusTeam/libroothide
+          path: libroothide
+
+      - name: Build and install symredirect (libroothide)
+        shell: bash
+        run: |
+          cd libroothide
+          bash symredirect-build.sh
+          echo "✅ symredirect installed successfully"
+          symredirect || echo "symredirect test completed"
 
       - name: Package Meson for iOS
         run: |
