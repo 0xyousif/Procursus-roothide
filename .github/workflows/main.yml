@@ -74,8 +74,8 @@ jobs:
           cd libroothide
           export PATH="/usr/local/bin:$PATH"
           bash symredirect-host-build.sh
-          echo "✅ symredirect installed successfully"
-          symredirect || echo "symredirect test completed"
+          echo "symredirect installed successfully"
+          
 
       - name: Package Meson for iOS
         run: |
