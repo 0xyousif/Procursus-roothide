@@ -63,6 +63,7 @@ jobs:
 
 
       - name: Clone libroothide and build symredirect
+        shell: bash
         run: |
           git clone https://github.com/ProcursusTeam/libroothide.git --depth=1
           cd libroothide
