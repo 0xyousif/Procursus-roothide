@@ -34,12 +34,6 @@ jobs:
             ${{ env.CACHE_PATH }}/procursus/var/lib/apt/lists/partial
           sudo rsync -aWlHh --inplace ${{ env.CACHE_PATH }}/procursus /opt
 
-      - name: Clone libroothide and build symredirect
-        run: |
-          git clone https://github.com/ProcursusTeam/libroothide.git
-          cd libroothide
-          bash symredirect-build.sh
-          symredirect || echo "symredirect test completed"
 
       - name: Prepare Procursus tools if not cached
         if: steps.procursus-cache.outputs.cache-hit != 'true'
