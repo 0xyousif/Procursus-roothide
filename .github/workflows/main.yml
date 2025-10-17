@@ -64,7 +64,9 @@ jobs:
 
 
       - name: Package Meson for iOS
-        run: cd ${{ github.workspace }}; make meson-package MEMO_TARGET=iphoneos-arm64-roothide
+        run: |
+          cd ${{ github.workspace }};
+          make -j$(sysctl -n hw.ncpu) meson-package MEMO_TARGET=iphoneos-arm64-roothide NO_PGP=1
 
       - name: Upload build_work archive
         if: always()
