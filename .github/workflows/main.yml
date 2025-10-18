@@ -1,3 +1,4 @@
+
 name: Build Meson (Procursus Roothide)
 
 on:
@@ -33,27 +34,23 @@ jobs:
           mkdir -p ${{ env.CACHE_PATH }}/procursus/var/cache/apt/archives/partial \
             ${{ env.CACHE_PATH }}/procursus/var/lib/apt/lists/partial
           sudo rsync -aWlHh --inplace ${{ env.CACHE_PATH }}/procursus /opt
-
-
       - name: Prepare Procursus tools if not cached
         if: steps.procursus-cache.outputs.cache-hit != 'true'
         run: |
           chmod +x ${{ github.workspace }}/build_tools/prepare_github_runner.sh
           ${{ github.workspace }}/build_tools/prepare_github_runner.sh
-
       - name: Add Procursus to PATH
         run: |
           echo "/opt/procursus/bin" >> $GITHUB_PATH
           echo "/opt/procursus/sbin" >> $GITHUB_PATH
           echo "CPATH=$CPATH:/opt/procursus/include" >> $GITHUB_ENV
           echo "LIBRARY_PATH=$LIBRARY_PATH:/opt/procursus/lib" >> $GITHUB_ENV
-
+          echo "/usr/local/bin" >> $GITHUB_PATH
       - name: Ensure make is linked
         run: |
           if [ ! -e /opt/procursus/bin/make ]; then
             sudo ln -s /opt/procursus/bin/gmake /opt/procursus/bin/make
           fi
-
       - name: Install build dependencies
         run: |
           sudo apt update
@@ -61,7 +58,6 @@ jobs:
             docbook-xml docbook-xsl fakeroot findutils flex gawk git gnupg \
             groff gzip ldid libtool make meson ncurses-bin openssl patch pkg-config \
             po4a python3 sed tar triehash wget xz-utils zstd
-
       - name: Checkout libroothide
         uses: actions/checkout@v4
         with:
@@ -72,16 +68,13 @@ jobs:
         shell: bash
         run: |
           cd libroothide
-          export PATH="/usr/local/bin:$PATH"
           bash symredirect-host-build.sh
-          echo "symredirect installed successfully"
-          
-
+          echo "✅ symredirect installed successfully"
+          symredirect || echo "symredirect test completed"
       - name: Package Meson for iOS
         run: |
           cd ${{ github.workspace }};
           make -j$(sysctl -n hw.ncpu) meson-package MEMO_TARGET=iphoneos-arm64-roothide NO_PGP=1
-
       - name: Upload build_work archive
         if: always()
         uses: actions/upload-artifact@v4
