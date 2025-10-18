@@ -55,6 +55,14 @@ jobs:
             sudo ln -sf /opt/procursus/bin/gmake /opt/procursus/bin/make
           fi
 
+      - name: Install build dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y autoconf automake autopoint bash bison cmake \
+            docbook-xml docbook-xsl fakeroot findutils flex gawk git gnupg \
+            groff gzip ldid libtool make meson ncurses-bin openssl patch pkg-config \
+            po4a python3 sed tar triehash wget xz-utils zstd
+
       - name: Checkout libroothide
         uses: actions/checkout@v4
         with:
