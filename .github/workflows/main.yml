@@ -55,11 +55,6 @@ jobs:
             sudo ln -sf /opt/procursus/bin/gmake /opt/procursus/bin/make
           fi
 
-      - name: Install build dependencies (via brew)
-        run: |
-          brew install autoconf automake bison cmake gettext gnu-sed gawk git \
-            groff pkg-config python3 wget xz
-
       - name: Checkout libroothide
         uses: actions/checkout@v4
         with:
