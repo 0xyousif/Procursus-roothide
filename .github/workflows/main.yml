@@ -80,20 +80,20 @@ jobs:
       - name: Prepare Python3 and Ninja for Meson build
         shell: bash
         run: |
-          BUILD_STAGE="${{ github.workspace }}/build_stage/iphoneos-arm64-roothide/1800"
-          mkdir -p "$BUILD_STAGE/python3/usr" "$BUILD_STAGE/ninja/usr/bin"
+          WORK_DIR="${{ github.workspace }}/build_work/iphoneos-arm64-roothide/1800"
+          mkdir -p "$WORK_DIR/python3/usr/bin" "$WORK_DIR/python3/usr/lib" "$WORK_DIR/ninja/usr/bin"
 
-          echo "📦 Copying Python3 and Ninja into build_stage..."
-          sudo cp -a /opt/procursus/usr/include "$BUILD_STAGE/python3/usr/" 2>/dev/null || true
-          sudo cp -a /opt/procursus/usr/lib "$BUILD_STAGE/python3/usr/" 2>/dev/null || true
-          sudo cp -a /opt/procursus/usr/bin/python3* "$BUILD_STAGE/python3/usr/bin/" 2>/dev/null || true
-          sudo cp -a /opt/procursus/usr/lib/python3*/site-packages "$BUILD_STAGE/python3/usr/lib/python3*/" 2>/dev/null || true
+          echo "📦 Copying Python3 and Ninja into build_work..."
+          sudo cp -a /opt/procursus/usr/include "$WORK_DIR/python3/usr/" 2>/dev/null || true
+          sudo cp -a /opt/procursus/usr/lib "$WORK_DIR/python3/usr/" 2>/dev/null || true
+          sudo cp -a /opt/procursus/usr/bin/python3* "$WORK_DIR/python3/usr/bin/" 2>/dev/null || true
+          sudo cp -a /opt/procursus/usr/lib/python3*/site-packages "$WORK_DIR/python3/usr/lib/python3*/" 2>/dev/null || true
 
-          sudo cp -a /opt/procursus/usr/bin/ninja "$BUILD_STAGE/ninja/usr/bin/" 2>/dev/null || true
+          sudo cp -a /opt/procursus/usr/bin/ninja "$WORK_DIR/ninja/usr/bin/" 2>/dev/null || true
 
           # Mark as built
-          touch "$BUILD_STAGE/python3/.build_complete"
-          touch "$BUILD_STAGE/ninja/.build_complete"
+          touch "$WORK_DIR/python3/.build_complete"
+          touch "$WORK_DIR/ninja/.build_complete"
 
           echo "✅ Python3 and Ninja prepared successfully."
 
