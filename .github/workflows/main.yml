@@ -1,4 +1,3 @@
-
 name: Build Meson (Procursus Roothide)
 
 on:
@@ -78,14 +77,34 @@ jobs:
           echo "✅ symredirect installed successfully"
           symredirect || echo "symredirect test completed"
 
+      - name: Prepare Python3 and Ninja for Meson build
+        shell: bash
+        run: |
+          BUILD_STAGE="${{ github.workspace }}/build_stage/iphoneos-arm64-roothide/1800"
+          mkdir -p "$BUILD_STAGE/python3/usr" "$BUILD_STAGE/ninja/usr/bin"
+
+          echo "📦 Copying Python3 and Ninja into build_stage..."
+          sudo cp -a /opt/procursus/usr/include "$BUILD_STAGE/python3/usr/" 2>/dev/null || true
+          sudo cp -a /opt/procursus/usr/lib "$BUILD_STAGE/python3/usr/" 2>/dev/null || true
+          sudo cp -a /opt/procursus/usr/bin/python3* "$BUILD_STAGE/python3/usr/bin/" 2>/dev/null || true
+          sudo cp -a /opt/procursus/usr/lib/python3*/site-packages "$BUILD_STAGE/python3/usr/lib/python3*/" 2>/dev/null || true
+
+          sudo cp -a /opt/procursus/usr/bin/ninja "$BUILD_STAGE/ninja/usr/bin/" 2>/dev/null || true
+
+          # Mark as built
+          touch "$BUILD_STAGE/python3/.build_complete"
+          touch "$BUILD_STAGE/ninja/.build_complete"
+
+          echo "✅ Python3 and Ninja prepared successfully."
+
       - name: Build Meson for iOS target
         run: |
           cd ${{ github.workspace }}
-          make -j$(sysctl -n hw.ncpu) meson MEMO_TARGET=iphoneos-arm64-roothide NO_PGP=1
+          make -j$(sysctl -n hw.ncpu) meson-package MEMO_TARGET=iphoneos-arm64-roothide NO_PGP=1
 
       - name: Upload build_work archive
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: build_work
-          path: ${{ github.workspace }}/build_work/iphoneos-arm64-roothide/
+          path: ${{ github.workspace }}/build_work/iphoneos-arm64-roothide/1800/meson
