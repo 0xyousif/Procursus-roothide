@@ -81,7 +81,7 @@ jobs:
       - name: Build Meson for iOS target
         run: |
           cd ${{ github.workspace }}
-          make -j$(sysctl -n hw.ncpu) nodejs-package MEMO_TARGET=iphoneos-arm64-roothide NO_PGP=1
+          make -j$(sysctl -n hw.ncpu) rust-package MEMO_TARGET=iphoneos-arm64-roothide NO_PGP=1
 
       - name: Upload build_work archive
         if: always()
