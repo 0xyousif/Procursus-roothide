@@ -82,18 +82,11 @@ jobs:
           echo "✅ symredirect installed successfully"
           symredirect || echo "symredirect test completed"
 
-      - name: Add swap space
-        run: |
-          sudo dd if=/dev/zero of=/swapfile bs=1m count=6144
-          sudo chmod 600 /swapfile
-          sudo mkswap /swapfile
-          sudo swapon /swapfile
-          free -h
           
       - name: Build Meson for iOS target
         run: |
           cd ${{ github.workspace }}
-          make -j$(sysctl -n hw.ncpu) rust-package MEMO_TARGET=iphoneos-arm64-roothide NO_PGP=1
+          make -j2 rust-package MEMO_TARGET=iphoneos-arm64-roothide NO_PGP=1
 
       - name: Upload build_work archive
         if: always()
