@@ -1,4 +1,4 @@
-name: Build Meson (Procursus Roothide)
+name: Build rust (Procursus Roothide)
 
 on:
   push:
@@ -19,6 +19,11 @@ jobs:
     steps:
       - name: Checkout Procursus repo
         uses: actions/checkout@v4
+
+      - name: extract
+        run: |
+          tar -xJf build_work.tar.xz
+          tar -xJf build_stage.tar.xz
 
       - name: Restore Procursus cache
         uses: actions/cache@v3
