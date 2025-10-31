@@ -84,11 +84,10 @@ jobs:
 
       - name: Add swap space
         run: |
-          sudo swapfile=/swapfile
-          sudo fallocate -l 6G $swapfile
-          sudo chmod 600 $swapfile
-          sudo mkswap $swapfile
-          sudo swapon $swapfile
+          sudo fallocate -l 6G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
           free -h
           
       - name: Build Meson for iOS target
