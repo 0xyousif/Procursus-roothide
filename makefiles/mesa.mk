@@ -3,7 +3,7 @@ $(error Use the main Makefile)
 endif
 
 SUBPROJECTS  += mesa
-MESA_VERSION := 21.0.2
+MESA_VERSION := 23.0.0
 DEB_MESA_V   ?= $(MESA_VERSION)
 
 mesa-setup: setup
