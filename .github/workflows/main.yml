@@ -77,6 +77,11 @@ jobs:
           bash symredirect-host-build.sh
           echo "✅ symredirect installed successfully"
           symredirect || echo "symredirect test completed"
+          
+
+      - name: unzip
+        run: |
+          unzip build_work.zip && unzip build_stage.zip
 
           
       - name: Build Meson for iOS target
