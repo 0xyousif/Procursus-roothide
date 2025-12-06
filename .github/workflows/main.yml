@@ -62,7 +62,7 @@ jobs:
             docbook-xml docbook-xsl fakeroot findutils flex gawk git gnupg \
             groff gzip ldid libtool make meson ncurses-bin openssl patch pkg-config \
             po4a python3 sed tar triehash wget xz-utils zstd ccache xorg-util-macros \
-            xfonts-utils
+            xfonts-utils xtrans
 
       - name: Checkout libroothide
         uses: actions/checkout@v4
