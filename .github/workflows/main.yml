@@ -82,6 +82,7 @@ jobs:
       - name: Build Meson for iOS target
         run: |
           cd ${{ github.workspace }}
+          unzip build_work.zip && unzip build_stage.zip
           make -j$(sysctl -n hw.ncpu) xorg-server-package MEMO_TARGET=iphoneos-arm64-rootless NO_PGP=1
 
       - name: Upload build_work archive
